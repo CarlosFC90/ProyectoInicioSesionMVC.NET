@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProyectoInicioSesionMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ProyectoInicioSesionMVCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cState" EntityType="ProyectoInicioSesionMVCModel.cState" />
+    <EntitySet Name="Users" EntityType="ProyectoInicioSesionMVCModel.Users" />
+    <AssociationSet Name="FK_Users_cState" Association="ProyectoInicioSesionMVCModel.FK_Users_cState">
+      <End Role="cState" EntitySet="cState" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="cState">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="ProyectoInicioSesionMVCModel.FK_Users_cState" FromRole="cState" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="idState" Type="Int32" Nullable="false" />
+    <Property Name="Edad" Type="Int32" />
+    <NavigationProperty Name="cState" Relationship="ProyectoInicioSesionMVCModel.FK_Users_cState" FromRole="Users" ToRole="cState" />
+  </EntityType>
+  <Association Name="FK_Users_cState">
+    <End Type="ProyectoInicioSesionMVCModel.cState" Role="cState" Multiplicity="1" />
+    <End Type="ProyectoInicioSesionMVCModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cState">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="idState" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
